@@ -5,16 +5,12 @@ import (
 )
 
 func main() {
-	if err := apt.Update(); err != nil {
-		panic(err)
-	}
-
-	m, err := apt.Load(false)
+	m, err := apt.Load("source.list", apt.ArchAMD64)
 	if err != nil {
 		panic(err)
 	}
 
-	if err = m.FetchPackage("nginx-light", "temp"); err != nil {
+	if err = m.FetchPackage("temp", "nginx-light"); err != nil {
 		panic(err)
 	}
 }

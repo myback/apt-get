@@ -21,12 +21,19 @@ const (
 	XZ
 )
 
-func Unpack(r *os.File, extractDir string) error {
-	if err := os.Mkdir(extractDir, 0755); err != nil && os.IsNotExist(err) {
+func Unpack(file string) error {
+	f, err := os.Open(file)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	extractDir := file[:len(file)-4]
+
+	if err = os.Mkdir(extractDir, 0755); err != nil && os.IsNotExist(err) {
 		return err
 	}
 
-	arFile := ar.NewReader(r)
+	arFile := ar.NewReader(f)
 	for {
 		hdrAr, err := arFile.Next()
 		if err != nil {
@@ -50,7 +57,7 @@ func Unpack(r *os.File, extractDir string) error {
 			continue
 		}
 
-		if err := Decompress(arFile, ft, filepath.Join(extractDir, archFilename)); err != nil {
+		if err = Decompress(arFile, ft, filepath.Join(extractDir, archFilename)); err != nil {
 			return err
 		}
 	}

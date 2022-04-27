@@ -2,16 +2,15 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/myback/apt-get"
 )
 
 func main() {
-	if err := apt.Update(); err != nil {
+	if err := apt.Update("source.list", apt.ArchAMD64); err != nil {
 		panic(err)
 	}
 
-	m, err := apt.Load(false)
+	m, err := apt.Load("source.list", apt.ArchAMD64)
 	if err != nil {
 		panic(err)
 	}

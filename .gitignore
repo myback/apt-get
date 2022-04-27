@@ -1,4 +1,7 @@
 .vscode/
 .idea/
+temp/
+apt_list/
+
 
 .DS_Store

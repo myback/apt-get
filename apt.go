@@ -99,7 +99,7 @@ func (p *Packages) GetPackagesDependency(pkgs ...string) ([]string, error) {
 	return p.depsList, nil
 }
 
-func (p *Packages) FetchPackage(pkg, outDir string) error {
+func (p *Packages) FetchPackage(outDir, pkg string) error {
 	pkgInfo, ok := p.info[pkg]
 	if !ok {
 		return fmt.Errorf("package %s not found", pkg)
@@ -111,7 +111,7 @@ func (p *Packages) FetchPackage(pkg, outDir string) error {
 		}
 	}
 
-	body, err := remote("http://ftp.debian.org/debian/" + pkgInfo.Filename)
+	body, err := fetchPackageList("http://ftp.debian.org/debian/" + pkgInfo.Filename)
 	if err != nil {
 		return err
 	}

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func remote(url string) (io.ReadCloser, error) {
+func fetchPackageList(url string) (io.ReadCloser, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
